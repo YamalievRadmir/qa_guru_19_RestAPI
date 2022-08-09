@@ -1,0 +1,57 @@
+plugins {
+    id("java-library")
+    id("io.qameta.allure") version "2.10.0"
+}
+
+group "org.example"
+version "1.0-SNAPSHOT"
+
+repositories {
+    mavenCentral()
+}
+
+allure {
+    report {
+        version.set("2.18.1")
+    }
+    adapter {
+        aspectjWeaver.set(true)
+        frameworks {
+            junit5 {
+                adapterVersion.set("2.18.1")
+            }
+        }
+    }
+}
+
+def jUnitVersion = '5.9.0',
+    selenideVersion = "6.6.6",
+    restAssuredVersion = "5.1.1",
+    allureVersion = "2.18.1",
+    javaFakerVersion = "1.0.2",
+    ownerVersion = "1.0.12",
+    slf4jVersion = "1.7.36"
+
+dependencies {
+    testImplementation(
+            "org.junit.jupiter:junit-jupiter:$jUnitVersion",
+            "com.codeborne:selenide:$selenideVersion",
+            "io.rest-assured:rest-assured:$restAssuredVersion",
+            "io.qameta.allure:allure-selenide:$allureVersion",
+            "io.qameta.allure:allure-rest-assured:$allureVersion",
+            "com.github.javafaker:javafaker:$javaFakerVersion",
+            "org.aeonbits.owner:owner:$ownerVersion",
+            "org.slf4j:slf4j-simple:$slf4jVersion"
+    )
+}
+
+
+tasks.withType(JavaCompile) {
+    options.encoding("UTF-8")
+}
+
+tasks.withType(Test) {
+    systemProperty "file.encoding", "utf-8"
+    systemProperties(System.getProperties())
+    useJUnitPlatform()
+}
