@@ -60,3 +60,4 @@ task demowebshop(type: Test) {
     useJUnitPlatform {
         includeTags 'demowebshop'
     }
+}
