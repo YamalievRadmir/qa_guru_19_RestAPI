@@ -8,41 +8,35 @@ import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 
 
-public class DemoWebShopTest  {
+public class DemoWebShopTest {
     //extends TestBase
 
     static String login,
             password;
 
-        @Test
-        @Tag("demowebshop1")
-        void userRegistrationTest2() {
-             /* curl 'http://demowebshop.tricentis.com/register' \
-            -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,;
-            -H 'Accept-Language: ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7' \
-            -H 'Connection: keep-alive' \
-            -H 'Cookie: ARRAffinity=92eb765899e80d8de4d490df907547e5cb10de899e8b754a4d5fa1a7122fad69; __utmc=78382081; __utmz=78382081.1659962655.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); __RequestVerificationToken=OIUW0kOQBayv18r01d3WNDiJdl6unMASOuw7ipomIQWE8kWPwOeJUQF0jYaoTSDgMGg5zFKKn9fOdeHGbKJz7a1m0iK1WCX88YAbANXs1_01; ASP.NET_SessionId=ygzhhhqrb1c1ooyiswyth0hh; __utma=78382081.1983996418.1659962655.1660034258.1660039005.4; __utmt=1; Nop.customer=48379b66-a820-4eba-aae4-36a0fdcb2e7f; __utmb=78382081.2.10.1660039005' \
-            -H 'Referer: http://demowebshop.tricentis.com/' \
-            -H 'Upgrade-Insecure-Requests: 1' \
-            -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36' \
-            --compressed \
-            --insecure */
-
-            given()
-                    .contentType("application/x-www-form-urlencoded; charset=UTF-8")
-                    .cookie("ARRAffinity=92eb765899e80d8de4d490df907547e5cb10de899e8b754a4d5fa1a7122fad69")
-                    //.body("Email" + login + "Password" + password + "RememberMe=false")
-                    .when()
-
-                    .then()
-                    .log().all()
-                    .statusCode(200);
-
-        }
-
-        @Test
-        @Tag("demowebshop1")
-        void userRegistrationEdit() {
+    @Test
+    @Tag("demowebshop1")
+    void registerUser() {
+        step("Заполняем и отправляем форму регистрации через API",
+                () -> {
+                    given()
+                            .contentType("application/x-www-form-urlencoded; charset=UTF-8")
+                            .cookie("ARRAffinity=92eb765899e80d8de4d490df907547e5cb10de899e8b754a4d5fa1a7122fad69")
+                            .formParam("FirstName", "John")
+                            .formParam("LastName", "Lenon")
+                            .formParam("Email", login)
+                            .formParam("Password", password)
+                            .formParam("ConfirmPassword", password)
+                            .when()
+                            .post("http://demowebshop.tricentis.com/register")
+                            .then()
+                            .statusCode(302)
+                            .extract().header("Location");
+                });
+    }
+    @Test
+    @Tag("demowebshop1")
+    void userRegistrationEdit() {
             /*curl 'http://demowebshop.tricentis.com/customer/info' \
            -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,
            -H 'Accept-Language: ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7' \
@@ -55,9 +49,8 @@ public class DemoWebShopTest  {
            -H 'Upgrade-Insecure-Requests: 1' \
            -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36' \
            --data-raw '__RequestVerificationToken=YgcXNl9iyTtrT6HONuo_icX10_Rl0yj9PgSSf539LPUH2Qx5KZyt44EQDRtfYm70JyHHs4xSBJB-XpQ7Apr8KX8EVVBe-piACDQHr_0xZWWh0_PVkCW0mY3gPXYssQxQ0&Gender=M&FirstName=Mike&LastName=Lenon&Email=John.Lenon%40yandex.ru&save-info-button=Save' */
-           step("Авторизируемся как пользователь"),
-                   () -> {
-        given()
+        step("Авторизируемся как пользователь", () -> {
+            given()
                     .contentType("application/x-www-form-urlencoded")
                     .cookie("ARRAffinity=92eb765899e80d8de4d490df907547e5cb10de899e8b754a4d5fa1a7122fad69")
                     .body("Email" + login + "Password" + password + "RememberMe=false")
@@ -66,24 +59,26 @@ public class DemoWebShopTest  {
                     .then()
                     .log().all()
                     .statusCode(200);
-        step("Меняем имя пользователя"),
-                () -> {
-                    String body = "__RequestVerificationToken=YgcXNl9iyTtrT6HONuo" +
-                            "_icX10_Rl0yj9PgSSf539LPUH2Qx5KZyt44EQDRtfYm70JyHHs4xSBJB" +
-                            "-XpQ7Apr8KX8EVVBe-piACDQHr_0xZWWh0_PVkCW0mY3gPXYssQxQ0&Gender" +
-                            "=M&FirstName=Mike&LastName=Lenon&Email=John.Lenon%40yandex.ru&save" +
-                            "-info-button=Save";
-                    given()
-                            .contentType("application/x-www-form-urlencoded")
-                            .cookie("ARRAffinity=92eb765899e80d8de4d490df907547e5cb10de899e8b754a4d5fa1a7122fad69")
-                            .body(body)
-                            .when()
-                            .post("http://demowebshop.tricentis.com/customer/info")
-                            .then()
-                            .log().all()
-                            .statusCode(302)
-                            .extract().header("Mike");
+        });
 
+        step("Меняем имя пользователя", () -> {
+            String body = "__RequestVerificationToken=YgcXNl9iyTtrT6HONuo" +
+                    "_icX10_Rl0yj9PgSSf539LPUH2Qx5KZyt44EQDRtfYm70JyHHs4xSBJB" +
+                    "-XpQ7Apr8KX8EVVBe-piACDQHr_0xZWWh0_PVkCW0mY3gPXYssQxQ0&Gender" +
+                    "=M&FirstName=Mike&LastName=Lenon&Email=John.Lenon%40yandex.ru&save" +
+                    "-info-button=Save";
+            given()
+                    .contentType("application/x-www-form-urlencoded")
+                    .cookie("ARRAffinity=92eb765899e80d8de4d490df907547e5cb10de899e8b754a4d5fa1a7122fad69")
+                    .body(body)
+                    .when()
+                    .post("http://demowebshop.tricentis.com/customer/info")
+                    .then()
+                    .log().all()
+                    .statusCode(302)
+                    .extract().header("Mike");
+        });
+    }
 
 
     @Test
@@ -100,7 +95,7 @@ public class DemoWebShopTest  {
 
         step("Verify successful authorization", () ->
                 $(".account").shouldHave(text(login)));
-        }
-
+    }
 }
+
 
