@@ -46,18 +46,6 @@ public class DemoWebShopTest extends TestBase {
     @Test
     @Tag("demowebshop1")
     void userRegistrationEdit() {
-            /*curl 'http://demowebshop.tricentis.com/customer/info' \
-           -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,
-           -H 'Accept-Language: ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7' \
-           -H 'Cache-Control: max-age=0' \
-           -H 'Connection: keep-alive' \
-           -H 'Content-Type: application/x-www-form-urlencoded' \
-           -H 'Cookie: ARRAffinity=92eb765899e80d8de4d490df907547e5cb10de899e8b754a4d5fa1a7122fad69; __utmc=78382081; __utmz=78382081.1659962655.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); __RequestVerificationToken=OIUW0kOQBayv18r01d3WNDiJdl6unMASOuw7ipomIQWE8kWPwOeJUQF0jYaoTSDgMGg5zFKKn9fOdeHGbKJz7a1m0iK1WCX88YAbANXs1_01; ASP.NET_SessionId=ygzhhhqrb1c1ooyiswyth0hh; NOPCOMMERCE.AUTH=39E3D4CF70AF8265411ED08A00FBB40904A2AD7B9673E7D794D79346953BD6BB75A1B2B73807EA8CCE834F47A9FF12E86688EDC238FC5E2D3596D877FD9A46EF664816380E726EE11EEAD6794FE77557701ACE6EADF7711EF4B957B96855AD4DEBAEC0F1AC48EA29ABD209506E963834E2F3AA560F697BBC307A63AA853AAC79BCBBC093AD00037D3D7E79014FCDC1D92AF0827B7AF8BE919199EFB1D5B8952A; Nop.customer=bf5c9535-734d-476a-bed2-9b47e42003c1; __utma=78382081.1983996418.1659962655.1660031922.1660034258.3; __utmt=1; __utmb=78382081.2.10.1660034258' \
-           -H 'Origin: http://demowebshop.tricentis.com' \
-           -H 'Referer: http://demowebshop.tricentis.com/customer/info' \
-           -H 'Upgrade-Insecure-Requests: 1' \
-           -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36' \
-           --data-raw '__RequestVerificationToken=YgcXNl9iyTtrT6HONuo_icX10_Rl0yj9PgSSf539LPUH2Qx5KZyt44EQDRtfYm70JyHHs4xSBJB-XpQ7Apr8KX8EVVBe-piACDQHr_0xZWWh0_PVkCW0mY3gPXYssQxQ0&Gender=M&FirstName=Mike&LastName=Lenon&Email=John.Lenon%40yandex.ru&save-info-button=Save' */
         step("Авторизируемся как пользователь", () -> {
             given()
                     .contentType("application/x-www-form-urlencoded")
