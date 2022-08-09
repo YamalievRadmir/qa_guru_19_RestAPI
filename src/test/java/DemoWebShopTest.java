@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.value;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 import static io.qameta.allure.Allure.step;
@@ -74,13 +75,9 @@ public class DemoWebShopTest extends TestBase {
                     .log().all()
                     .statusCode(302)
                     .extract().header("Mike");
+
         });
-    }
 
-
-    @Test
-    @Tag("demowebshop")
-    void logTestUI() {
         step("Open login page", () ->
                 open("http://demowebshop.tricentis.com/login"));
 
@@ -92,6 +89,9 @@ public class DemoWebShopTest extends TestBase {
 
         step("Verify successful authorization", () ->
                 $(".account").shouldHave(text(config.login())));
+
+        open("http://demowebshop.tricentis.com/customer/info");
+        $("#FirstName").shouldHave(value("Mike"));
     }
 }
 

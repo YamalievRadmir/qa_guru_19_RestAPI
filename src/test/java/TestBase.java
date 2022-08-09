@@ -23,12 +23,14 @@ public class TestBase {
         Configuration.remote = "https://user1:1234@selenoid.autotests.cloud/wd/hub";
     }
 
-   @AfterEach
+    @AfterEach
     void addAttachments() {
-        if (WebDriverRunner.hasWebDriverStarted())
-        Attach.screenshotAs("Last screenshot");
-        Attach.pageSource();
-        Attach.browserConsoleLogs();
-        Attach.addVideo();
+        if (WebDriverRunner.hasWebDriverStarted()) {
+            Attach.screenshotAs("Last screenshot");
+            Attach.pageSource();
+            Attach.browserConsoleLogs();
+            Attach.addVideo();
         }
     }
+}
+
