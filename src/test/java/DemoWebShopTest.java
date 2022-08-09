@@ -1,3 +1,5 @@
+import config.CredentialsConfig;
+import org.aeonbits.owner.ConfigFactory;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -8,11 +10,11 @@ import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 
 
-public class DemoWebShopTest {
-    //extends TestBase
-
-    static String login,
-            password;
+public class DemoWebShopTest extends TestBase {
+    //
+    static CredentialsConfig config = ConfigFactory.create(CredentialsConfig.class);
+    static String login = config.login(),
+            password = config.password();
 
     @Test
     @Tag("demowebshop1")
@@ -32,8 +34,15 @@ public class DemoWebShopTest {
                             .then()
                             .statusCode(302)
                             .extract().header("Location");
+
+                    step("Проверяем регистрацию", () -> {
+
+                        open("http://demowebshop.tricentis.com/registerresult/1");
+                        $(".page-body").shouldHave(text("Your registration completed"));
+                    });
                 });
     }
+
     @Test
     @Tag("demowebshop1")
     void userRegistrationEdit() {
@@ -85,16 +94,16 @@ public class DemoWebShopTest {
     @Tag("demowebshop")
     void logTestUI() {
         step("Open login page", () ->
-                open("/login"));
+                open("http://demowebshop.tricentis.com/login"));
 
         step("Fill login form", () -> {
-            $("#Email").setValue(login);
-            $("#Password").setValue(password)
+            $("#Email").setValue(config.login());
+            $("#Password").setValue(config.password())
                     .pressEnter();
         });
 
         step("Verify successful authorization", () ->
-                $(".account").shouldHave(text(login)));
+                $(".account").shouldHave(text(config.login())));
     }
 }
 
