@@ -18,7 +18,7 @@ public class DemoWebShopTest extends TestBase {
             password = config.password();
 
     @Test
-    @Tag("demowebshop1")
+    @Tag("demowebshop")
     void registerUser() {
         step("Заполняем и отправляем форму регистрации через API",
                 () -> {
@@ -45,7 +45,7 @@ public class DemoWebShopTest extends TestBase {
     }
 
     @Test
-    @Tag("demowebshop1")
+    @Tag("demowebshop")
     void userRegistrationEdit() {
         step("Авторизируемся как пользователь", () -> {
             given()
